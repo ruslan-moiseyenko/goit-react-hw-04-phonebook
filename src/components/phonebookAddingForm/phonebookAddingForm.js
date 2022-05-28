@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { FormPhoneBook, FormInput } from './FormPhoneBook.styled';
 
 export default function PhonebookAddingForm({ onSubmit }) {
-
-  const [id, setID] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const handleChange = event => {
     const { name, value } = event.currentTarget;
     switch (name) {
-      case 'id':
-        setID(value);
-        break;
       case 'name':
         setName(value);
         break;
@@ -27,13 +23,12 @@ export default function PhonebookAddingForm({ onSubmit }) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    setID(nanoid());
+    const id = nanoid();
     onSubmit({ id, name, number });
     reset();
   };
 
   const reset = () => {
-    setID('');
     setName('');
     setNumber('');
   };
@@ -65,10 +60,7 @@ export default function PhonebookAddingForm({ onSubmit }) {
           />
         </label>
         <br />
-        <button
-          type="submit"
-          name="button Add"
-        >
+        <button type="submit" name="button Add">
           Add contact
         </button>
       </label>
@@ -76,3 +68,6 @@ export default function PhonebookAddingForm({ onSubmit }) {
   );
 }
 
+PhonebookAddingForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
